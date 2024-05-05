@@ -1,12 +1,5 @@
-class Main:
-    class Numeros:
-        def __init__(self, num1, num2, operacao, resultado=None):
-            self.num1 = num1
-            self.num2 = num2
-            self.operacao = operacao
-            self.resultado = resultado
-
-    class Calculando:        
+class Calculadora:
+        #Classe de definição das operações.        
         def adc(self, num1, num2, resultado=None):
             return num1 + num2
             
@@ -17,19 +10,10 @@ class Main:
             return num1 * num2
             
         def div(self, num1, num2, resultado=None):
-            if num2 == 0:
-                raise ValueError("Divisão por zero não é permitida! Tente novamente.")
-            else:
-                return num1 / num2
-
-    class Interacao:
-        def pergunta(self, resultado=None):
-            num1 = resultado if resultado is not None else float(input("Digite o primeiro valor: "))
-            num2 = float(input("Digite o segundo valor: "))
-            operacao = input("Digite a palavra da operação que você deseja realizar:\nAdc é (+), Sub é (-), Mul é (*), Div é (/) >> ").lower()
-            return num1, num2, operacao
-    
-    class Exibir:
+            return num1 / num2
+            
+class Exibir:
+        #Classe de exibições na tela do usuário.
         def mostrar_boas_vindas(self):
             print(30 * "#")
             print("Seja bem-vindo a nossa calculadora!\nVamos começar!")
@@ -43,16 +27,39 @@ class Main:
 
         def continuar_calculando(self):
             return input("Deseja continuar calculando com o resultado? (s/n)").lower()
+        
+        def pergunta(self, resultado=None):
+            while True:
+                num1 = resultado if resultado is not None else input("Digite o primeiro valor: ")
+                num2 = input("Digite o segundo valor: ")
 
+                try:
+                    num1 = float(num1)
+                    num2 = float(num2)
+                    if resultado is not None:
+                        resultado = float(resultado)
+                    if num2 == 0:
+                        raise ValueError("Divisão por zero não é permitida! Tente novamente.")
+                except ValueError:
+                    print("O valor digitado é incorreto! Tente novamente utilizando apenas números.")
+                    continue
+
+                operacao = input("Digite a palavra da operação que você deseja realizar:\nAdc é (+), Sub é (-), Mul é (*), Div é (/) >> ").lower()
+                if operacao not in ['adc', 'sub', 'mul', 'div']:
+                    print("Operação inválida! Digite o opção corretamente.")
+                    continue
+                else:
+                    return num1, num2, operacao
+class Main:
+    #Instanciando as classes Calculadora e Exibir dentro de uma função para rodar tods os camandos.
     def executar_calculadora(self):
-        exibir = self.Exibir()
+        exibir = Exibir()
         exibir.mostrar_boas_vindas()
-        interacao = self.Interacao()
-        calculadora = self.Calculando()
+        calculadora = Calculadora()
         
         resultado = None
         while True:
-            num1, num2, operacao = interacao.pergunta(resultado)
+            num1, num2, operacao = exibir.pergunta(resultado)
             try:
                 if operacao == 'adc':
                     resultado = calculadora.adc(num1, num2)
@@ -67,7 +74,7 @@ class Main:
                 continue
             
             exibir.mostrar_resultado(resultado)
-            if not exibir.continuar_calculando():
+            if 'n' in exibir.continuar_calculando():
                 print("Calculadora encerrada!")
                 break
 
