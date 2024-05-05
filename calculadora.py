@@ -1,5 +1,4 @@
 class Main:
-
     class Numeros:
         def __init__(self, num1, num2, operacao, resultado=None):
             self.num1 = num1
@@ -43,7 +42,7 @@ class Main:
             print("Operação inválida. Por favor, digite uma operação válida.")
 
         def continuar_calculando(self):
-            return input("Deseja continuar calculando com o resultado? (s/n)").lower()
+            return print("Deseja continuar calculando com o resultado? (s/n)").lower()
 
     def executar_calculadora(self):
         exibir = self.Exibir()
@@ -63,9 +62,6 @@ class Main:
                     resultado = calculadora.mul(num1, num2)
                 elif operacao == 'div':
                     resultado = calculadora.div(num1, num2)
-                else:
-                    exibir.mostrar_operacao_invalida()
-                    continue
             except ValueError as e:
                 print(f"Erro: {e}")
                 continue
