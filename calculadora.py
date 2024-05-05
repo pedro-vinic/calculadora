@@ -42,7 +42,7 @@ class Main:
             print("Operação inválida. Por favor, digite uma operação válida.")
 
         def continuar_calculando(self):
-            return print("Deseja continuar calculando com o resultado? (s/n)").lower()
+            return input("Deseja continuar calculando com o resultado? (s/n)").lower()
 
     def executar_calculadora(self):
         exibir = self.Exibir()
